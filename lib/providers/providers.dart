@@ -1,7 +1,6 @@
 /* List with initialization of all providers */
 
 // 📦 Package imports:
-import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
 // 🌎 Project imports:

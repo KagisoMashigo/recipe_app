@@ -3,15 +3,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 // 📦 Package imports:
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:package_info/package_info.dart';
-import 'package:recipe_app/pages/Landing.dart';
+import 'package:recipe_app/pages/Home/Home.dart';
 
 // 🌎 Project imports:
 import 'package:recipe_app/router.dart';
 import 'package:recipe_app/singletons/app.dart';
 import 'package:recipe_app/singletons/env.dart';
-import 'package:recipe_app/theme.dart';
 
 class RecipeApp extends StatefulWidget {
   RecipeApp({
@@ -36,8 +33,6 @@ class RecipeApp extends StatefulWidget {
 }
 
 class _RecipeAppState extends State<RecipeApp> with WidgetsBindingObserver {
-  Future<void> _initCall;
-  Locale _locale;
   GlobalKey<NavigatorState> _navKey;
 
   @override
@@ -59,39 +54,21 @@ class _RecipeAppState extends State<RecipeApp> with WidgetsBindingObserver {
     super.dispose();
   }
 
-  Future<void> getAppVersion() async {
-    final packageInfo = await PackageInfo.fromPlatform();
-    final _packageVersion = packageInfo.version;
-
-    /// This represents the unique build number index.
-    /// Display to the user to validate the app build number
-    /// [FIREBASE] Provided in the CLI for firebase deployment only.
-    /// [STORE] Provided in the CLI throw the store app setting
-    const _build = String.fromEnvironment('build');
-    final _builderNumber = _build.isNotEmpty ? _build : packageInfo.buildNumber;
-    String _version = '$_packageVersion-$_builderNumber';
-    widget.appSingleton.setVersion(_version);
-
-    /// This represents the cluster the app consume.
-    /// Display only for internal usage
-    /// [FIREBASE] Provided in the CLI for firebase deployment only.
-    /// [STORE] Not provided.
-    const _cluster = String.fromEnvironment('cluster');
-    if (_cluster.isNotEmpty) {
-      widget.appSingleton.setCluster(_cluster);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: _navKey,
       showSemanticsDebugger: false,
       debugShowCheckedModeBanner: false,
+      // Here will be the primary theme
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+          // primarySwatch: Colors.blue,
+          ),
+      // Dark theme tb added
+      darkTheme: null,
+      home: HomePage(
+        title: 'Super cool app!',
       ),
-      home: LandingPage(),
       routes: routes,
       locale: Locale('en', 'US'),
       navigatorObservers: [routeObserver],
